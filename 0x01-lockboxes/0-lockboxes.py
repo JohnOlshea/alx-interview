@@ -1,21 +1,31 @@
 #!/usr/bin/python3
-'''A module for working with lockboxes.
+'''
+Lockbox task: You have n number of locked boxes in front of you.
+Each box is numbered sequentially from 0 to n - 1
+and each box may contain keys to the other boxes
 '''
 
 
+# asdfasdfasfasdfsd
 def canUnlockAll(boxes):
-    '''Checks if all the boxes in a list of boxes containing the keys
-    (indices) to other boxes can be unlocked given that the first
-    box is unlocked.
-    '''
-    n = len(boxes)
-    seen_boxes = set([0])
-    unseen_boxes = set(boxes[0]).difference(set([0]))
-    while len(unseen_boxes) > 0:
-        boxIdx = unseen_boxes.pop()
-        if not boxIdx or boxIdx >= n or boxIdx < 0:
-            continue
-        if boxIdx not in seen_boxes:
-            unseen_boxes = unseen_boxes.union(boxes[boxIdx])
-            seen_boxes.add(boxIdx)
-    return n == len(seen_boxes)
+    '''true if it can unlock al box from 0'''
+    keys = set(boxes[0])
+    tmp = {0}
+    counter = 0
+
+    # print("boxes: ", boxes)
+    while (counter != len(tmp)):
+        counter = len(tmp)
+        for key in keys:
+            try:
+                tmp.update(boxes[key])
+            except Exception:
+                continue
+        keys.update(tmp)
+
+    # print(keys)
+    for i in range(len(boxes)):
+        if i not in keys:
+            return False
+
+    return True
